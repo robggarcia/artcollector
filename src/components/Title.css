@@ -1,0 +1,16 @@
+.title {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    background-color: #fce1e0;
+    width: 100%;
+    text-align: center;
+}
+
+.title h1 {
+    margin-bottom: -15px;
+    font-family: 'Prata', serif;
+}
+
+.title h3 {
+    margin-bottom: 15px;
+}
