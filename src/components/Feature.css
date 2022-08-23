@@ -23,6 +23,17 @@
     font-family: 'Prata', serif;
 }
 
+.header h3 {
+    margin-top: 15px;
+    margin-bottom: 8px;
+}
+
+h4 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
 .details {
     margin-left: 10px;
     min-height: 0;
