@@ -2,7 +2,14 @@ import { useEffect, useState } from "react";
 
 import "./Preview.css";
 
-const Preview = ({ BASE_URL, KEY, queryParams, setFeaturedID }) => {
+const Preview = ({
+  BASE_URL,
+  KEY,
+  queryParams,
+  setFeaturedID,
+  isLoading,
+  setIsLoading,
+}) => {
   const [objects, setObjects] = useState([]);
   const [next, setNext] = useState("");
   const [prev, setPrev] = useState("");
@@ -10,6 +17,7 @@ const Preview = ({ BASE_URL, KEY, queryParams, setFeaturedID }) => {
   const fetchObjects = async () => {
     try {
       if (queryParams) {
+        setIsLoading(true);
         const response = await fetch(
           `${BASE_URL}/object?apikey=${KEY}&${queryParams}`
         );
@@ -20,6 +28,8 @@ const Preview = ({ BASE_URL, KEY, queryParams, setFeaturedID }) => {
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -30,6 +40,7 @@ const Preview = ({ BASE_URL, KEY, queryParams, setFeaturedID }) => {
   const handlePrevButton = async () => {
     try {
       if (prev) {
+        setIsLoading(true);
         const response = await fetch(prev);
         const data = await response.json();
         setObjects(data.records);
@@ -38,12 +49,15 @@ const Preview = ({ BASE_URL, KEY, queryParams, setFeaturedID }) => {
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleNextButton = async () => {
     try {
       if (next) {
+        setIsLoading(true);
         const response = await fetch(next);
         const data = await response.json();
         setObjects(data.records);
@@ -52,6 +66,8 @@ const Preview = ({ BASE_URL, KEY, queryParams, setFeaturedID }) => {
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -59,14 +75,14 @@ const Preview = ({ BASE_URL, KEY, queryParams, setFeaturedID }) => {
     <div className="preview">
       <div className="preview-nav">
         <button
-          disabled={!prev ? true : false}
+          disabled={!prev || isLoading ? true : false}
           value="previous"
           onClick={handlePrevButton}
         >
           Previous
         </button>
         <button
-          disabled={!next ? true : false}
+          disabled={!next || isLoading ? true : false}
           value="next"
           onClick={handleNextButton}
         >

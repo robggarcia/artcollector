@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 
 import "./Feature.css";
 
-const Feature = ({ BASE_URL, KEY, featuredID }) => {
+const Feature = ({ BASE_URL, KEY, featuredID, setIsLoading }) => {
   const [featured, setFeatured] = useState(null);
 
   const fetchObject = async () => {
     try {
       if (featuredID) {
+        setIsLoading(true);
         console.log(`${BASE_URL}/object?apikey=${KEY}&id=${featuredID}`);
         const response = await fetch(
           `${BASE_URL}/object?apikey=${KEY}&objectnumber=${featuredID}`
@@ -17,14 +18,14 @@ const Feature = ({ BASE_URL, KEY, featuredID }) => {
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     fetchObject();
   }, [featuredID]);
-
-  console.log(featured);
 
   return (
     <div className="feature">

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import "./Search.css";
 
-const Search = ({ BASE_URL, KEY, queryParams, setQueryParams }) => {
+const Search = ({ BASE_URL, KEY, setQueryParams, isLoading }) => {
   const [classifications, setClassifications] = useState([]);
   const [classOption, setClassOption] = useState("any");
 
@@ -132,7 +132,7 @@ const Search = ({ BASE_URL, KEY, queryParams, setQueryParams }) => {
           ))}
         </select>
       </div>
-      <button id="search-button" type="submit">
+      <button id="search-button" type="submit" disabled={isLoading}>
         SEARCH
       </button>
     </form>
