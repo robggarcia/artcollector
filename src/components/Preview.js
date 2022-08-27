@@ -6,7 +6,7 @@ const Preview = ({
   BASE_URL,
   KEY,
   queryParams,
-  setFeaturedID,
+  setFeatured,
   isLoading,
   setIsLoading,
 }) => {
@@ -23,6 +23,7 @@ const Preview = ({
         );
         const data = await response.json();
         setObjects(data.records);
+        console.log("NEW OBJECTS: ", objects);
         setNext(data.info.next);
         setPrev(data.info.prev);
       }
@@ -96,7 +97,9 @@ const Preview = ({
             <div
               key={object.id}
               className="preview-obj"
-              onClick={() => setFeaturedID(object.objectnumber)}
+              onClick={() => {
+                setFeatured(object);
+              }}
             >
               <h4>{object.title}</h4>
               <img src={object.primaryimageurl} alt={object.description} />

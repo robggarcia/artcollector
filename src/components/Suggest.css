@@ -1,0 +1,14 @@
+.suggestions {
+    background-color: #fce1e0;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    position: absolute;
+    top: 180px;
+    left: 20px;
+    opacity: 95%;
+}
+
+.suggestions li {
+    font-size: 18px;
+}

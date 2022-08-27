@@ -2,14 +2,20 @@ import { useEffect, useState } from "react";
 
 import "./Search.css";
 
-const Search = ({ BASE_URL, KEY, setQueryParams, isLoading }) => {
+const Search = ({
+  BASE_URL,
+  KEY,
+  setQueryParams,
+  isLoading,
+  setSuggestions,
+  keyword,
+  setKeyword,
+}) => {
   const [classifications, setClassifications] = useState([]);
   const [classOption, setClassOption] = useState("any");
 
   const [centuries, setCenturies] = useState([]);
   const [centuryOption, setCenturyOption] = useState("any");
-
-  const [keyword, setKeyword] = useState("");
 
   const fetchClassifications = async () => {
     try {
@@ -78,14 +84,16 @@ const Search = ({ BASE_URL, KEY, setQueryParams, isLoading }) => {
       `century=${centID}\&classification=${classID}\&keyword=${keywordString}`
     );
 
-    // uncomment below to clear form after submit
-    /* setKeyword("");
+    // clear form after submit
+    setKeyword("");
     setClassOption("any");
-    setCenturyOption("any"); */
+    setCenturyOption("any");
+    setSuggestions([]);
   };
 
   const handleInput = (e) => {
     setKeyword(e.target.value);
+    fetchQueryResults();
   };
 
   const handleClassOption = (e) => {
@@ -94,7 +102,18 @@ const Search = ({ BASE_URL, KEY, setQueryParams, isLoading }) => {
 
   const handleCenturyOption = (e) => {
     setCenturyOption(e.target.value);
-    console.log(centuryOption);
+  };
+
+  const fetchQueryResults = async () => {
+    try {
+      const response = await fetch(
+        `${BASE_URL}/object?size=10&apikey=${KEY}&keyword=${keyword}`
+      );
+      const data = await response.json();
+      setSuggestions(data.records);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

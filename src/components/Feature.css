@@ -39,7 +39,7 @@ h4 {
     min-height: 0;
     grid-column: 1;
     grid-row: 2;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .detail {
@@ -50,7 +50,17 @@ h4 {
 
 .content {
     flex: 0 1 auto;
+    align-self: center;
 }
+
+a, a:visited {
+    color: #484d5c;
+}
+
+a:hover {
+    color: #f5a19e;
+}
+
 
 .detail-title {
     width: 130px;
@@ -63,7 +73,7 @@ h4 {
     grid-row: 2;
     padding: 8px;
     min-height: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
     background-color: #FFFDFC;
 }
 

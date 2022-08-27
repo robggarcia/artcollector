@@ -1,59 +1,55 @@
-import { useEffect, useState } from "react";
-
 import "./Feature.css";
 
-const Feature = ({ BASE_URL, KEY, featuredID, setIsLoading }) => {
-  const [featured, setFeatured] = useState(null);
-
-  const fetchObject = async () => {
-    try {
-      if (featuredID) {
-        setIsLoading(true);
-        console.log(`${BASE_URL}/object?apikey=${KEY}&id=${featuredID}`);
-        const response = await fetch(
-          `${BASE_URL}/object?apikey=${KEY}&objectnumber=${featuredID}`
-        );
-        const data = await response.json();
-        setFeatured(data.records[0]);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchObject();
-  }, [featuredID]);
-
+const Feature = ({ featured, setQueryParams }) => {
   return (
     <div className="feature">
       {featured && (
         <>
-          <div className="header">
-            <h3>{featured.title}</h3>
-            <h4>{featured.dated}</h4>
-          </div>
+          {featured.title && (
+            <div className="header">
+              <h3>{featured.title}</h3>
+              <h4>{featured.dated}</h4>
+            </div>
+          )}
           <div className="details">
             {featured.culture && (
               <div className="detail">
                 <p className="detail-title">Culture</p>
-                <p className="content">{featured.culture}</p>
+                <a
+                  href="#"
+                  className="content"
+                  onClick={() => setQueryParams(`culture=${featured.culture}`)}
+                >
+                  {featured.culture}
+                </a>
               </div>
             )}
 
             {featured.technique && (
               <div className="detail">
                 <p className="detail-title">Technique</p>
-                <p className="content">{featured.technique}</p>
+                <a
+                  href="#"
+                  className="content"
+                  onClick={() =>
+                    setQueryParams(`technique=${featured.technique}`)
+                  }
+                >
+                  {featured.technique}
+                </a>
               </div>
             )}
 
             {featured.medium && (
               <div className="detail">
                 <p className="detail-title">Medium</p>
-                <p className="content">{featured.medium}</p>
+                <a
+                  href="#"
+                  className="content"
+                  onClick={() => setQueryParams(`keyword=${featured.medium}`)}
+                >
+                  {featured.medium}
+                </a>
               </div>
             )}
 
@@ -65,10 +61,18 @@ const Feature = ({ BASE_URL, KEY, featuredID, setIsLoading }) => {
             )}
 
             {featured.people &&
-              featured.people.map((person) => (
-                <div className="detail">
+              featured.people.map((person, i) => (
+                <div className="detail" key={i}>
                   <p className="detail-title">Person</p>
-                  <p className="content">{person.name}</p>
+                  <a
+                    href="#"
+                    className="content"
+                    onClick={() =>
+                      setQueryParams(`person=${person.displayname}`)
+                    }
+                  >
+                    {person.name}
+                  </a>
                 </div>
               ))}
 
@@ -89,7 +93,9 @@ const Feature = ({ BASE_URL, KEY, featuredID, setIsLoading }) => {
             {featured.contact && (
               <div className="detail">
                 <p className="detail-title">Contact</p>
-                <p className="content">{featured.contact}</p>
+                <a href={`mailto:${featured.contact}`} className="content">
+                  {featured.contact}
+                </a>
               </div>
             )}
 
